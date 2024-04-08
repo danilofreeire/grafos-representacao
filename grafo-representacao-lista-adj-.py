@@ -18,8 +18,14 @@ class Edge:
         self.to_ = to_ # NÓ DE DESTINO
         self.weight = weight  #PESO
         self.active = active #SE O NÓ ESTÁ ATIVO
+    
     def to_str(self):
-        return f"{'{'}{self.from_.tag},{self.to_.tag},{self.weight}{'}'}" #{ NOME NÓ ORIGEM , NOME NÓ DESTINO , PESO }
+        if self.weight is not None:
+            return f"{'{'}{self.from_.tag},{self.to_.tag},{self.weight}{'}'}" #{ NOME NÓ ORIGEM , NOME NÓ DESTINO , PESO }
+        else:
+            return f"{'{'}{self.from_.tag},{self.to_.tag}{'}'}" #{ NOME NÓ ORIGEM , NOME NÓ DESTINO , PESO }
+
+    
 class Graph:
 
     def __init__(self,oriented=True):
@@ -46,7 +52,7 @@ class Graph:
             self.add_node(tag) #ADICIONA ESSE NÓ NO DICIONARIO V
         return self.V[tag] # SE O NÓ ESTÁ, APENAS RETORNA ELE 
 
-    def add_edge(self,tag_from,tag_to,weight):#RECEBE O NÓ DE ORIGEM, NÓ DE DESTINO E PESO
+    def add_edge(self,tag_from,tag_to,weight= None):#RECEBE O NÓ DE ORIGEM, NÓ DE DESTINO E PESO
 
         frm = self.get_node(tag_from) #PEGA O NÓ DE ORIGEM
         to = self.get_node(tag_to)#PEGA O NÓ DE DESTINO
@@ -55,8 +61,11 @@ class Graph:
         if not self.oriented: # SE O GRAFO NÃO É ORIENTADO
              to.add_neighbor(frm) #ADICIONA O NÓ DE ORIGEM COMO VIZINHO DO NÓ DE DESTINO
 
+        if weight is not None: #CRIA UM OBJETO ARESTA COM PESO
+            edge = Edge(frm, to, weight)
+        else: #CRIA UM OBJETO ARESTA SEM PESO
+            edge = Edge(frm, to)
 
-        edge = Edge(frm,to,weight) #CRIA UM OBJETO ARESTA
         k1 = frm.tag+10000*to.tag #CRIA UMA CHAVE ESPECIFICA
         self.E[k1] = edge #ADICIONA O OBJETO ARESTA NO DICIONARIO E
         
@@ -64,14 +73,36 @@ class Graph:
 graph = Graph()
 
 # Adicionando nós ao grafo
-graph.add_node("A")
-graph.add_node("B")
-graph.add_node("C")
+graph.add_node("0")
+graph.add_node("1")
+graph.add_node("2")
+graph.add_node("3")
+graph.add_node("4")
 
-# Adicionando arestas ao grafo
-graph.add_edge("A", "B", 5)
-graph.add_edge("B", "C", 3)
-graph.add_edge("C", "A", 2)
+# Adicionando arestas ao grafo SEM PESO
+graph.add_edge("0", "3")
+graph.add_edge("0", "2")
+graph.add_edge("1", "3")
+graph.add_edge("4", "1")
+graph.add_edge("2", "4")
+# Imprimindo informações sobre o grafo
+graph.print_me()
 
+# Criando um objeto Graph
+graph = Graph()
+
+# Adicionando nós ao grafo
+graph.add_node("0")
+graph.add_node("1")
+graph.add_node("2")
+graph.add_node("3")
+graph.add_node("4")
+
+# Adicionando arestas ao grafo COM PESO
+graph.add_edge("0", "3", 3)
+graph.add_edge("0", "2", 11)
+graph.add_edge("1", "3", 42)
+graph.add_edge("4", "1", 3)
+graph.add_edge("2", "4", 7)
 # Imprimindo informações sobre o grafo
 graph.print_me()

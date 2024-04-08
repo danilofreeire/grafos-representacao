@@ -13,7 +13,7 @@ class Node:
         self.adj.append(node) # ADICIONA O NÓ 'NODE' A LISTA 'SELF.ADJ'
 
 class Edge:
-    def __init__(self,from_=None,to=None,weight=None,active=True):
+    def __init__(self,from_=None,to_=None,weight=None,active=True):
         self.from_ = from_ # NÓ DE ORIGEM
         self.to_ = to_ # NÓ DE DESTINO
         self.weight = weight  #PESO
@@ -22,11 +22,11 @@ class Edge:
         return f"{'{'}{self.from_.tag},{self.to_.tag},{self.weight}{'}'}" #{ NOME NÓ ORIGEM , NOME NÓ DESTINO , PESO }
 class Graph:
 
-    def __init__(self,file_name,oriented=True):
+    def __init__(self,oriented=True):
         self.V = {} # DICIONARIO QUE ARMAZENA OS NÓS(VERTICES)
         self.E = {} # DICIONARIO QUE ARMAZENA AS ARESTAS
         self.oriented = oriented # DEFINE O GRÁFICO COMO ORIENTADO
-        self.__load(file_name) #LER UM ARQUIVO
+       
 
     def print_me(self):
         for n in self.V: #PARA CADA NÓ N NO DICIONARIO V, OU SEJA, ITERA SOBRE OS NÓS DO GRAFO
@@ -60,3 +60,18 @@ class Graph:
         k1 = frm.tag+10000*to.tag #CRIA UMA CHAVE ESPECIFICA
         self.E[k1] = edge #ADICIONA O OBJETO ARESTA NO DICIONARIO E
         
+# Criando um objeto Graph
+graph = Graph()
+
+# Adicionando nós ao grafo
+graph.add_node("A")
+graph.add_node("B")
+graph.add_node("C")
+
+# Adicionando arestas ao grafo
+graph.add_edge("A", "B", 5)
+graph.add_edge("B", "C", 3)
+graph.add_edge("C", "A", 2)
+
+# Imprimindo informações sobre o grafo
+graph.print_me()
